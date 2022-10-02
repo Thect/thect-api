@@ -10,8 +10,8 @@
     "prettier-check:updated": "pipe-git-updated --ext=css --ext=html --ext=js --ext=json --ext=md --ext=yaml --ext=yml -- prettier -c",
     "prettify": "prettier --write --ignore-path .gitignore \"**/*.{css,html,js,json,md,yaml,yml}\"",
     "prettify:updated": "pipe-git-updated --ext=css --ext=html --ext=js --ext=json --ext=md --ext=yaml --ext=yml -- prettier --write",
-    "test:unit": "jest /test/unit/**/*.test.ts --verbose test",
-    "test:unit:coverage": "jest /test/unit/**/*.test.ts  --verbose --coverage=true --collectCoverageFrom=src/**/*.{js,jsx,ts,vue} test || exit 0"
+    "test:unit": "jest \"^test/unit/(.*/)*(.*\\.)*(test)\\.ts$\" --verbose test",
+    "test:unit:coverage": "jest tests/unit/**/*.test.ts --verbose --coverage=true --collectCoverageFrom=src/**/*.{ts} test || exit 0"
   },
   "engines": {
     "node": ">=14.15.0"
