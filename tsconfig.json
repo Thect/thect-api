@@ -6,11 +6,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "removeComments": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
+    "esModuleInterop": true,
     "target": "ES2020",
     "outDir": "lib"
   },
-  "include": ["src/**/*.ts", "serverless.ts"],
+  "include": ["**/*.ts", "serverless.ts"],
   "exclude": [
     "node_modules/**/*",
     ".serverless/**/*",
@@ -19,6 +22,10 @@
     ".vscode/**/*",
     "__tests__/**/*"
   ],
+  "baseUrl": "src",
+  "paths": {
+    "@libs/*": ["libs/*"]
+  },
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   }

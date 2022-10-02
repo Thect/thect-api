@@ -1,31 +1,21 @@
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
-import { formatJSONResponse } from '@libs/api-gateway';
+import { formatJSONResponse } from '../../../libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
 import schema from './schema';
+import { SpacesService } from 'src/services/SpacesService';
 
 const getMySpaces: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
-  const fromQueryParameter = Number(event.queryStringParameters?.from);
-  const limitQueryParameter = Number(event.queryStringParameters?.limit);
-  const from = isNaN(fromQueryParameter) ? 0 : fromQueryParameter;
-  const limit = isNaN(limitQueryParameter) ? 10 : limitQueryParameter;
+  const userId = '';
+  const from = Number(event.queryStringParameters?.from);
+  const limit = Number(event.queryStringParameters?.limit);
 
-  console.log(`From: ${from}`);
-  console.log(`Limit: ${limit}`);
+  const spaceService = new SpacesService();
+  const result = spaceService.getMySpaces({ userId, from, limit });
 
   return formatJSONResponse({
-    data: [
-      {
-        name: 'Space 1',
-      },
-      {
-        name: 'Space 2',
-      },
-      {
-        name: 'Space 3',
-      },
-    ],
-    count: 3,
+    data: result,
+    count: result.length,
   });
 };
 

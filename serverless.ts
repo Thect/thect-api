@@ -5,7 +5,7 @@ import getMySpaces from '@functions/spaces/getMySpaces';
 const serverlessConfiguration: AWS = {
   service: 'thect-api',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild', 'serverless-offline', 'serverless-jest-plugin'],
+  plugins: ['serverless-esbuild', 'serverless-offline'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',

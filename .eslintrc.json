@@ -3,7 +3,12 @@
   "parserOptions": {
     "requireConfigFile": false
   },
-  "extends": ["@serverless/eslint-config/node"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "standard"
+  ],
   "root": true,
   "settings": {
     "import/resolver": {
