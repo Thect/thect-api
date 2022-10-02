@@ -19,8 +19,7 @@
     ".serverless/**/*",
     ".webpack/**/*",
     "_warmup/**/*",
-    ".vscode/**/*",
-    "__tests__/**/*"
+    ".vscode/**/*"
   ],
   "baseUrl": "src",
   "paths": {
