@@ -1,11 +1,11 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
+import getMySpaces from '@functions/spaces/getMySpaces';
 
 const serverlessConfiguration: AWS = {
   service: 'thect-api',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: ['serverless-esbuild', 'serverless-offline', 'serverless-jest-plugin'],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
@@ -20,7 +20,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { hello },
+  functions: { getMySpaces },
   package: { individually: true },
   custom: {
     esbuild: {
