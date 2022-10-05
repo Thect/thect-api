@@ -17,5 +17,15 @@ describe('Space Service', () => {
 
       expect(res.length).toBeGreaterThanOrEqual(1);
     });
+
+    test('Should throw an error if called without a userId', () => {
+      const userId: string | undefined = undefined;
+      const from = 0;
+      const limit = 10;
+
+      expect(() => {
+        spaceService.getMySpaces({ userId, from, limit });
+      }).toThrow('No user ID given.');
+    });
   });
 });

@@ -11,3 +11,6 @@ jspm_packages
 # test results
 coverage
 test-report.xml
+
+#config file
+.env

@@ -1,30 +1,30 @@
+import { PrismaClient } from '@prisma/client';
 import { SpacesListItem } from 'src/models/spaces/spacesListItem';
 
 export class SpacesService {
-  getMySpaces({
+  async getMySpaces({
     userId,
     from,
     limit,
   }: {
-    userId: string;
-    from?: number | undefined;
-    limit?: number | undefined;
-  }): SpacesListItem[] {
+    userId?: string;
+    from?: number;
+    limit?: number;
+  }): Promise<SpacesListItem[]> {
     if (userId === undefined) {
       throw new Error('No user ID given.');
     }
     from = from && isNaN(from) ? 0 : from;
     limit = limit && isNaN(limit) ? 10 : limit;
-    return [
-      {
-        name: 'Space 1',
+    const prisma = new PrismaClient();
+    await prisma.$connect();
+    console.log(userId);
+    const spaces = await prisma.spaces.findMany({
+      where: {
+        users: { has: userId },
       },
-      {
-        name: 'Space 2',
-      },
-      {
-        name: 'Space 3',
-      },
-    ];
+    });
+    await prisma.$disconnect();
+    return spaces;
   }
 }
