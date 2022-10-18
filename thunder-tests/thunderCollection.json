@@ -4,6 +4,14 @@
     "colName": "Thect API Tests",
     "created": "2022-10-01T20:41:15.577Z",
     "sortNum": 10000,
-    "folders": []
+    "folders": [
+      {
+        "_id": "20f30de9-0307-4f65-ad5a-6ff92e535449",
+        "name": "spaces",
+        "containerId": "",
+        "created": "2022-10-18T20:03:20.789Z",
+        "sortNum": 10000
+      }
+    ]
   }
 ]

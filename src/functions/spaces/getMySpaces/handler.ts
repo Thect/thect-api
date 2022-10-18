@@ -1,22 +1,25 @@
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
-import { formatJSONResponse } from '../../../libs/api-gateway';
-import { middyfy } from '@libs/lambda';
+import { middyfy } from '../../../libs/lambda';
 
-import schema from './schema';
+import { createContext } from '../../../context';
 import { SpacesService } from 'src/services/SpacesService';
 
-const getMySpaces: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
-  const userId = '123456';
+export const spaceService = new SpacesService(createContext());
+
+export const getMySpaces = async (event) => {
+  console.log(event.body);
+  const userId = event.headers['x-validated-user']?.valueOf();
   const from = Number(event.queryStringParameters?.from);
   const limit = Number(event.queryStringParameters?.limit);
 
-  const spaceService = new SpacesService();
   const result = await spaceService.getMySpaces({ userId, from, limit });
 
-  return formatJSONResponse({
-    data: result,
-    count: result.length,
-  });
+  return {
+    statusCode: 200,
+    body: JSON.stringify({
+      data: result,
+      count: result.length,
+    }),
+  };
 };
 
 export const main = middyfy(getMySpaces);

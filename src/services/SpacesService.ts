@@ -1,7 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 import { SpacesListItem } from 'src/models/spaces/spacesListItem';
+import { Context } from '../context';
 
 export class SpacesService {
+  prisma: PrismaClient;
+
+  constructor(ctx: Context) {
+    this.prisma = ctx.prisma;
+  }
+
   async getMySpaces({
     userId,
     from,
@@ -16,15 +23,15 @@ export class SpacesService {
     }
     from = from && isNaN(from) ? 0 : from;
     limit = limit && isNaN(limit) ? 10 : limit;
-    const prisma = new PrismaClient();
-    await prisma.$connect();
-    console.log(userId);
-    const spaces = await prisma.spaces.findMany({
+
+    await this.prisma.$connect();
+    const spaces = await this.prisma.spaces.findMany({
       where: {
         users: { has: userId },
       },
     });
-    await prisma.$disconnect();
+    await this.prisma.$disconnect();
+
     return spaces;
   }
 }
