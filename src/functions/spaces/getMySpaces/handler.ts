@@ -6,7 +6,6 @@ import { SpacesService } from 'src/services/SpacesService';
 export const spaceService = new SpacesService(createContext());
 
 export const getMySpaces = async (event) => {
-  console.log(event.body);
   const userId = event.headers['x-validated-user']?.valueOf();
   const from = Number(event.queryStringParameters?.from);
   const limit = Number(event.queryStringParameters?.limit);
