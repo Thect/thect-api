@@ -11,10 +11,5 @@ const config: Config.InitialOptions = {
   roots: ['<rootDir>'],
   modulePaths: ['<rootDir>', '<rootDir>/src/libs/'],
   moduleDirectories: ['<rootDir>/node_modules', '<rootDir>/src'],
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json',
-    },
-  },
 };
 export default config;
