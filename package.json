@@ -4,6 +4,8 @@
   "description": "Serverless aws-nodejs-typescript template",
   "main": "serverless.ts",
   "scripts": {
+    "build": "npx prisma generate",
+    "dev": "npm run build && serverless offline --reloadHandler",
     "lint": "eslint  --ignore-path .gitignore .",
     "lint:updated": "pipe-git-updated --ext=js -- eslint --ignore-path .gitignore",
     "prettier-check": "prettier -c --ignore-path .gitignore \"**/*.{css,html,js,json,md,yaml,yml}\"",
@@ -38,7 +40,7 @@
     "jest-sonar-reporter": "^2.0.0",
     "json-schema-to-ts": "^1.5.0",
     "prettier": "^2.7.1",
-    "prisma": "^4.4.0",
+    "prisma": "^4.5.0",
     "serverless": "^3.0.0",
     "serverless-esbuild": "^1.23.3",
     "serverless-offline": "^10.3.2",
