@@ -2,6 +2,7 @@ import { middyfy } from '../../../libs/lambda';
 
 import { createContext } from '../../../context';
 import { SpacesService } from 'src/services/SpacesService';
+import { SpacesListItem } from 'src/models/spaces/spacesListItem';
 
 export const spaceService = new SpacesService(createContext());
 
@@ -10,6 +11,14 @@ export const getMySpaces = async (event) => {
   if (event.headers) {
     userId = event.headers['x-validated-user']?.valueOf();
   }
+
+  if (!userId) {
+    return {
+      statusCode: 401,
+    };
+  }
+
+  console.log(userId);
 
   let from = NaN;
   let limit = NaN;
@@ -20,13 +29,18 @@ export const getMySpaces = async (event) => {
     console.log(JSON.stringify({ userId, from, limit }));
   }
 
-  const result = await spaceService.getMySpaces({ userId, from, limit });
+  const amountOfMySpaces = await spaceService.countMySpaces({ userId });
+
+  let spaces: SpacesListItem[] = [];
+  if (amountOfMySpaces > 0) {
+    spaces = await spaceService.getMySpaces({ userId, from, limit });
+  }
 
   return {
     statusCode: 200,
     body: JSON.stringify({
-      data: result,
-      count: result.length,
+      data: spaces,
+      count: amountOfMySpaces,
     }),
   };
 };

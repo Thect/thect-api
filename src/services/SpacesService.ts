@@ -14,24 +14,46 @@ export class SpacesService {
     from,
     limit,
   }: {
-    userId?: string;
-    from?: number;
-    limit?: number;
+    userId: string;
+    from: number;
+    limit: number;
   }): Promise<SpacesListItem[]> {
     if (userId === undefined) {
       throw new Error('No user ID given.');
     }
-    from = from && isNaN(from) ? 0 : from;
-    limit = limit && isNaN(limit) ? 10 : limit;
+
+    from = isNaN(from) ? 0 : from;
+    limit = isNaN(limit) ? 10 : limit;
 
     await this.prisma.$connect();
     const spaces = await this.prisma.spaces.findMany({
       where: {
         users: { has: userId },
       },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+      },
+      skip: from,
+      take: limit,
     });
     await this.prisma.$disconnect();
-
     return spaces;
+  }
+
+  async countMySpaces({ userId }: { userId: string }): Promise<number> {
+    if (userId === undefined) {
+      throw new Error('No user ID given.');
+    }
+
+    await this.prisma.$connect();
+    const countMySpaces = await this.prisma.spaces.count({
+      where: {
+        users: { has: userId },
+      },
+    });
+    await this.prisma.$disconnect();
+    return countMySpaces;
   }
 }
