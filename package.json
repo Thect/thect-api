@@ -5,7 +5,7 @@
   "main": "serverless.ts",
   "scripts": {
     "build": "npx prisma generate",
-    "dev": "npm run build && serverless offline --reloadHandler",
+    "dev": "npm run build && serverless offline --reloadHandler --stage dev",
     "lint": "eslint  --ignore-path .gitignore .",
     "lint:updated": "pipe-git-updated --ext=js -- eslint --ignore-path .gitignore",
     "prettier-check": "prettier -c --ignore-path .gitignore \"**/*.{css,html,js,json,md,yaml,yml}\"",
@@ -22,7 +22,9 @@
   "dependencies": {
     "@middy/core": "^2.5.3",
     "@middy/http-json-body-parser": "^2.5.3",
-    "@prisma/client": "^4.4.0"
+    "@prisma/client": "^4.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwks-rsa": "^3.0.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",

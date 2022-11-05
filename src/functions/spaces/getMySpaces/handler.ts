@@ -8,9 +8,10 @@ export const spaceService = new SpacesService(createContext());
 
 export const getMySpaces = async (event) => {
   let userId = '';
-  if (event.headers) {
-    userId = event.headers['x-validated-user']?.valueOf();
+  if (event?.requestContext?.authorizer) {
+    userId = event.requestContext.authorizer.principalId;
   }
+  console.log(userId);
 
   if (!userId) {
     return {
@@ -18,15 +19,11 @@ export const getMySpaces = async (event) => {
     };
   }
 
-  console.log(userId);
-
   let from = NaN;
   let limit = NaN;
   if (event.queryStringParameters) {
-    console.log(JSON.stringify(event.queryStringParameters));
     from = Number(event.queryStringParameters?.from);
     limit = Number(event.queryStringParameters?.limit);
-    console.log(JSON.stringify({ userId, from, limit }));
   }
 
   const amountOfMySpaces = await spaceService.countMySpaces({ userId });
