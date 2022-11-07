@@ -15,6 +15,9 @@ jest.mock('../../../../src/services/SpacesService', () => {
             },
           ];
         }),
+        countMySpaces: jest.fn().mockImplementation(() => {
+          return 1;
+        }),
       };
     }),
   };
@@ -29,8 +32,10 @@ describe('Spaces', () => {
 
       it('Should return 200 status code', async () => {
         const event = {
-          headers: {
-            'x-validated-user': 'test-user-id',
+          requestContext: {
+            authorizer: {
+              principalId: 'test-user-id',
+            },
           },
         } as any;
 
@@ -40,32 +45,56 @@ describe('Spaces', () => {
 
       it('Should return a JSON body', async () => {
         const event = {
-          headers: {
-            'x-validated-user': 'test-user-id',
+          requestContext: {
+            authorizer: {
+              principalId: 'test-user-id',
+            },
           },
         } as any;
 
         const result = await handler.getMySpaces(event);
-        const returnValue = JSON.parse(result.body);
+        expect(result).not.toBeNull();
+        const returnValue = JSON.parse(result.body ?? '');
         expect(returnValue).not.toBeNull();
       });
 
       it('Should return 1 in count', async () => {
         const event = {
-          headers: {
-            'x-validated-user': 'test-user-id',
+          requestContext: {
+            authorizer: {
+              principalId: 'test-user-id',
+            },
           },
         } as any;
 
         const result = await handler.getMySpaces(event);
-        const returnValue = JSON.parse(result.body);
+        expect(result).not.toBeNull();
+        const returnValue = JSON.parse(result.body ?? '');
         expect(returnValue.count).toBe(1);
+      });
+
+      it('Should call count my spaces with correct user id', async () => {
+        const event = {
+          requestContext: {
+            authorizer: {
+              principalId: 'test-user-id',
+            },
+          },
+        } as any;
+
+        await handler.getMySpaces(event);
+        const mockedSpacesService = handler.spaceService;
+        const mockedCountMySpaces = mockedSpacesService.countMySpaces as jest.Mock;
+        const values = mockedCountMySpaces.mock.calls[mockedCountMySpaces.mock.calls.length - 1][0];
+        expect(values.userId).toBe('test-user-id');
       });
 
       it('Should call get my spaces with correct user id', async () => {
         const event = {
-          headers: {
-            'x-validated-user': 'test-user-id',
+          requestContext: {
+            authorizer: {
+              principalId: 'test-user-id',
+            },
           },
         } as any;
 
@@ -78,6 +107,11 @@ describe('Spaces', () => {
 
       it('Should call get my spaces with correct from', async () => {
         const event = {
+          requestContext: {
+            authorizer: {
+              principalId: 'test-user-id',
+            },
+          },
           queryStringParameters: {
             from: '99',
           },
@@ -92,6 +126,11 @@ describe('Spaces', () => {
 
       it('Should call get my spaces with correct limit', async () => {
         const event = {
+          requestContext: {
+            authorizer: {
+              principalId: 'test-user-id',
+            },
+          },
           queryStringParameters: {
             limit: '99',
           },

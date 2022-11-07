@@ -14,7 +14,7 @@ export class SpacesService {
     from,
     limit,
   }: {
-    userId: string;
+    userId?: string;
     from: number;
     limit: number;
   }): Promise<SpacesListItem[]> {

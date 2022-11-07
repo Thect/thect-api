@@ -11,7 +11,6 @@ export const getMySpaces = async (event) => {
   if (event?.requestContext?.authorizer) {
     userId = event.requestContext.authorizer.principalId;
   }
-  console.log(userId);
 
   if (!userId) {
     return {
