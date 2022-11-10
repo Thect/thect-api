@@ -1,7 +1,7 @@
 import { middyfy } from '../../../libs/lambda';
 
 import { createContext } from '../../../context';
-import { SpacesService } from 'src/services/SpacesService';
+import { SpacesService } from 'src/services/spacesService';
 import { SpacesListItem } from 'src/models/spaces/spacesListItem';
 
 export const spaceService = new SpacesService(createContext());
