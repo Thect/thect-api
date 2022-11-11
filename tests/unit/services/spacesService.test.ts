@@ -76,5 +76,43 @@ describe('Services', () => {
         expect(ctx.prisma.$disconnect).toBeCalledTimes(1);
       });
     });
+
+    describe('Count My Spaces', () => {
+      it('Should return 1 result', async () => {
+        const userId = 'test-user-id';
+        const ctx = createMockContext();
+        ctx.prisma.$connect.mockImplementationOnce(jest.fn());
+        ctx.prisma.spaces.count.mockResolvedValue(1);
+        ctx.prisma.$disconnect.mockImplementationOnce(jest.fn());
+        const spaceService = new SpacesService(ctx);
+        const result = await spaceService.countMySpaces({ userId });
+        expect(result).toBe(1);
+      });
+
+      test('Should throw an error if called without a userId', async () => {
+        const userId: string | undefined = undefined;
+        const ctx = createMockContext();
+        const spaceService = new SpacesService(ctx);
+        expect(spaceService.countMySpaces({ userId })).rejects.toThrow('No user ID given.');
+      });
+
+      test('The function should call prisma $connect once', async () => {
+        const userId = 'test-user-id';
+        const ctx = createMockContext();
+        ctx.prisma.$connect.mockImplementationOnce(jest.fn());
+        const spaceService = new SpacesService(ctx);
+        await spaceService.countMySpaces({ userId });
+        expect(ctx.prisma.$connect).toBeCalledTimes(1);
+      });
+
+      test('The function should call prisma $disconnect once', async () => {
+        const userId = 'test-user-id';
+        const ctx = createMockContext();
+        ctx.prisma.$disconnect.mockImplementationOnce(jest.fn());
+        const spaceService = new SpacesService(ctx);
+        await spaceService.countMySpaces({ userId });
+        expect(ctx.prisma.$disconnect).toBeCalledTimes(1);
+      });
+    });
   });
 });

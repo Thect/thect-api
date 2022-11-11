@@ -42,7 +42,7 @@ export class SpacesService {
     return spaces;
   }
 
-  async countMySpaces({ userId }: { userId: string }): Promise<number> {
+  async countMySpaces({ userId }: { userId?: string }): Promise<number> {
     if (userId === undefined) {
       throw new Error('No user ID given.');
     }

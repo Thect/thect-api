@@ -144,6 +144,19 @@ describe('Functions', () => {
           const values = mockedGetMySpaces.mock.calls[mockedGetMySpaces.mock.calls.length - 1][0];
           expect(values.limit).toBe(99);
         });
+
+        it('Should return 401 status code when userId is not provided', async () => {
+          const event = {
+            requestContext: {
+              authorizer: {
+                principalId: '',
+              },
+            },
+          } as any;
+
+          const result = await handler.getMySpaces(event);
+          expect(result.statusCode).toBe(401);
+        });
       });
     });
   });
