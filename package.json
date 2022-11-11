@@ -20,7 +20,7 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
-    "@middy/core": "^2.5.3",
+    "@middy/core": "^3.6.2",
     "@middy/http-json-body-parser": "^3.6.2",
     "@prisma/client": "^4.4.0",
     "jsonwebtoken": "^8.5.1",
