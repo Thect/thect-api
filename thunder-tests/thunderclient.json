@@ -1,0 +1,21 @@
+[
+  {
+    "_id": "37ca067c-bdb4-436d-910d-f01c61705e0a",
+    "colId": "3a08b678-b42c-4c74-b1ac-97715d444f1d",
+    "containerId": "20f30de9-0307-4f65-ad5a-6ff92e535449",
+    "name": "getMySpaces",
+    "url": "http://[::1]:3000/dev/spaces/v1/my",
+    "method": "GET",
+    "sortNum": 20000,
+    "created": "2022-10-18T20:03:28.640Z",
+    "modified": "2022-11-05T05:11:04.101Z",
+    "headers": [
+      {
+        "name": "Accept",
+        "value": "application/json"
+      }
+    ],
+    "params": [],
+    "tests": []
+  }
+]
